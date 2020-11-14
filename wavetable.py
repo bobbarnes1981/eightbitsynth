@@ -18,16 +18,17 @@ print(','.join(d))
 print("saw")
 d = []
 for i in range(0, samples):
-    d.append(str((int)(i / 2) * 2))
+    d.append(str(i))
 print(','.join(d))
 
 print("triangle")
 d = []
+val = 0
 for i in range(0, (int)(samples / 2)):
-    d.append(str(i * 2))
-d.append("255")
-for i in range((int)(samples / 2), 0, -1):
-    d.append(str(d[i]))
+    d.append(str(Val += 2))
+val += 2
+for i in range((int)(samples / 2), samples):
+    d.append(str(val -= 2))
 print(','.join(d))
 
 
