@@ -1,6 +1,10 @@
 
-long int freq = 262000; // 262Hz middle c
-byte nclk = 168; // set to number of cycles for loop() 
+#define C3 130.81
+#define C4 261.63
+#define C5 523.25
+
+long int freq = C5 * 1000; //frequency in mHz
+byte nclk = 42; // set to number of cycles for loop() 
 long unsigned int phase;
 long unsigned int phase_inc;
 
@@ -15,9 +19,7 @@ void setup() {
   TIMSK0 &= ~_BV(TOIE0); // disable timer0 overflow interrupt
   
   phase = 0;
-
-  // 2^32/16E6=268.435456
-  phase_inc=0.268435456*nclk*freq;
+  calc_phase_inc();
 
   // maybe use DDRD
   pinMode(2, OUTPUT);
@@ -35,6 +37,10 @@ void loop() {
   phase += phase_inc;
   int calcphase = phase >> 24;
   output(sine[calcphase]);
+}
+
+void calc_phase_inc(){
+  phase_inc=0.268435456*nclk*freq;    
 }
 
 void output(byte data) {
