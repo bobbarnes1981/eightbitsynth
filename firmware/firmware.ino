@@ -6,6 +6,7 @@
 #define G4 392.00
 #define A4 440.00
 #define B4 493.88
+#define C5 523.25
 
 #define WAVE_SIN 0
 #define WAVE_TAN 1
@@ -32,7 +33,8 @@ double notes[] = {
   349.23, // F4
   392.00, // G4
   440.00, // A4
-  493.88  // B4
+  493.88, // B4
+  523.25  // C5
 };
 
 byte waves[][256] = {
@@ -114,7 +116,7 @@ void serialEvent() {
     char c = Serial.read();
     if (c == 'n') {
       note += 1;
-      if (note > 6) {
+      if (note > 7) {
         note = 0;
       }
       freq = notes[note];
