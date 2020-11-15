@@ -118,8 +118,13 @@ ISR (PCINT0_vect){
 void serialEvent() {
   while (Serial.available()) {
     byte stat = Serial.read();
+    byte cmd = stat & 0xF0;
+    byte chn = stat & 0x0F;
+    Serial.print("Channel: 0x");
+    Serial.print(chn, HEX);
+    Serial.print(" ");
     byte b1, b2;
-    switch (stat & 0xF0) {
+    switch (cmd) {
       case 0xC0:
         Serial.print("Program Change: Prog=0x");
         while(!Serial.available());
@@ -165,7 +170,7 @@ void serialEvent() {
         break;
       default:
         Serial.print("unhandled command: 0x");
-        Serial.println(stat, HEX);
+        Serial.println(cmd, HEX);
         break;
     }
   }
