@@ -120,29 +120,39 @@ void serialEvent() {
     byte stat = Serial.read();
     byte cmd = stat & 0xF0;
     byte chn = stat & 0x0F;
+#ifdef DEBUG
     Serial.print("Channel: 0x");
     Serial.print(chn, HEX);
     Serial.print(" ");
+#endif
     byte b1, b2;
     switch (cmd) {
       case 0xC0:
+#ifdef DEBUG
         Serial.print("Program Change: Prog=0x");
+#endif
         while(!Serial.available());
         b1 = Serial.read();
+#ifdef DEBUG
         Serial.println(b1, HEX);
+#endif
         if (b1 < numProgs && b1 >= 0) {
           prog = b1;
         }
         break;
       case 0x80:
+#ifdef DEBUG
         Serial.print("Note Off: Key=0x");
+#endif
         while(!Serial.available());
         b1 = Serial.read();
         while(!Serial.available());
         b2 = Serial.read();
+#ifdef DEBUG
         Serial.print(b1, HEX);
         Serial.print(" Vel=0x");
         Serial.println(b2, HEX);
+#endif
         if (b1 < numKeys && b1 >= 0) {
           if (b1 == key) {
             key = -1;
@@ -153,14 +163,18 @@ void serialEvent() {
         }
         break;
       case 0x90:
+#ifdef DEBUG
         Serial.print("Note On: Key=0x");
+#endif
         while(!Serial.available());
         b1 = Serial.read();
         while(!Serial.available());
         b2 = Serial.read();
+#ifdef DEBUG
         Serial.print(b1, HEX);
         Serial.print(" Vel=0x");
         Serial.println(b2, HEX);
+#endif
         if (b1 < numKeys && b1 >= 0) {
           key = b1;
           wave = prog + 1; // offset because of 'no sound' program at beginning
@@ -169,8 +183,10 @@ void serialEvent() {
         }
         break;
       default:
+#ifdef DEBUG
         Serial.print("unhandled command: 0x");
         Serial.println(cmd, HEX);
+#endif
         break;
     }
   }
