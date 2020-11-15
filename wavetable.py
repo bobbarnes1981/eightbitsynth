@@ -71,3 +71,11 @@ for i in range(0, samples):
 print(f'byte wave_rnd[{len(d)}] = {{')
 print(','.join(d))
 print("}")
+
+# non
+d = []
+for i in range(0, samples):
+    d.append('128')
+print(f'byte wave_none[{len(d)}] = {{')
+print(','.join(d))
+print("}")
