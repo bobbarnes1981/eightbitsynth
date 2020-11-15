@@ -3,6 +3,7 @@
 #define D4 293.66
 #define E4 329.63
 #define F4 349.23
+#define G4 392.00
 #define A4 440.00
 #define B4 493.88
 
@@ -20,6 +21,7 @@ long unsigned int phase_inc;
 
 int note = 0;
 int wave = 0;
+double vol = 1.0;
 
 // https://www.instructables.com/Arduino-Waveform-Generator-1/
 
@@ -28,6 +30,7 @@ double notes[] = {
   293.66, // D4
   329.63, // E4
   349.23, // F4
+  392.00, // G4
   440.00, // A4
   493.88  // B4
 };
@@ -111,7 +114,7 @@ void serialEvent() {
     char c = Serial.read();
     if (c == 'n') {
       note += 1;
-      if (note > 5) {
+      if (note > 6) {
         note = 0;
       }
       freq = notes[note];
@@ -124,6 +127,13 @@ void serialEvent() {
         wave = 0;
       }
       Serial.println(wave);
+    }
+    if (c == 'v') {
+      if (vol >= 1) {
+        vol = 0;
+      }
+      vol += 0.2;
+      Serial.println(vol);
     }
   }
 }
